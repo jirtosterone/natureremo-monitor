@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @event.device_id %>
+</p>
+
+<p>
+  <strong>Event datetime:</strong>
+  <%= @event.event_datetime %>
+</p>
+
+<p>
+  <strong>Temparature:</strong>
+  <%= @event.temparature %>
+</p>
+
+<p>
+  <strong>Humidity:</strong>
+  <%= @event.humidity %>
+</p>
+
+<p>
+  <strong>Illumination:</strong>
+  <%= @event.illumination %>
+</p>
+
+<p>
+  <strong>Movement:</strong>
+  <%= @event.movement %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

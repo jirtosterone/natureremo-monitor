@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  device: one
+  event_datetime: 2021-10-07 23:04:09
+  temparature: 1.5
+  humidity: 1.5
+  illumination: 1.5
+  movement: 1.5
+
+two:
+  device: two
+  event_datetime: 2021-10-07 23:04:09
+  temparature: 1.5
+  humidity: 1.5
+  illumination: 1.5
+  movement: 1.5
