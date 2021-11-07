@@ -1,3 +1,37 @@
 <h1>Nature Remo Monitor</h1>
 
-<%= line_chart Event.group_by_day(:event_datetime) %>
+<h2>Devices</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @devices.each_with_index do |device, i| %>
+      <tr>
+        <td><%= (i+1) %></td>
+        <td><%= device.device_id %></td>
+        <td><%= device.device_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Temparature</h2>
+<%= line_chart Event.group(:device_id).group_by_hour(:event_datetime).average(:temparature) %>
+<%# <%= line_chart @events.map { |event|
+  {name: event.device.device_name, data: event.group_by_hour(:event_datetime).average(:temparature)}
+} %>
+
+<h2>Humidity</h2>
+<%= line_chart Event.group(:device_id).group_by_hour(:event_datetime).average(:humidity) %>
+
+<h2>Illumination</h2>
+<%= line_chart Event.group(:device_id).group_by_hour(:event_datetime).average(:illumination) %>
+
+<h2>Movement</h2>
+<%= line_chart Event.group(:device_id).group_by_hour(:event_datetime).average(:movement) %>
