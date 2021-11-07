@@ -7,7 +7,7 @@ module Script
   # Loggerパラメータ
   LOGGER_DT_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
   LOGGER_DEST = STDOUT
-  LOGGER_LEVEL = Logger::DEBUG
+  LOGGER_LEVEL = Logger::INFO
 
 
   class RemoApi
@@ -38,6 +38,8 @@ module Script
       @request['Authorization'] = conf['remo']['auth']
       @request['accept'] = conf['remo']['accept']
       @logger.debug("Req obj: #{@request.inspect}")
+
+      @logger.info('Initialized.')
     end
 
     # Remoに登録したデバイスの最新データを取得
@@ -52,6 +54,8 @@ module Script
       if code != 200 then
         @logger.error("Request error: Code: #{code}, Body: #{@data}")
       end
+
+      @logger.info('Got data.')
     end
 
     # RemoデータをDBにINSERT
@@ -93,6 +97,8 @@ module Script
         # DBにデータを追加
         ret = event.save()
       end
+
+      @logger.info('Inserted data.')
     end
   end
 

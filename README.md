@@ -1,4 +1,4 @@
-# Benjamin
+# Benjamin　(開発中)
 
 Nature Remoのデータを取得してグラフ表示するアプリです。  
 Ruby on Railsで開発しています。  
@@ -50,7 +50,7 @@ whenever --update-crontab
 
 `crontab -l`を実行すると以下のような設定が追加されていることが確認できる。
 ```
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/bash -l -c 'cd <railsアプリのディレクトリ> && bundle exec bin/rails runner -e production '\''lib/script/remo_api.rb'\'''
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/bash -l -c 'cd <railsアプリのディレクトリ> && bundle exec rails runner -e development '\''lib/script/remo_api.rb'\'' >> log/cron.log 2>&1
 ```
 
 ※crontabから削除するには以下を実行する。
