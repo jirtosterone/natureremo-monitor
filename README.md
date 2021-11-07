@@ -9,16 +9,20 @@ Ruby on Railsで開発しています。
 2. 取得したデータをActive Record (DB)に追加。
 3. Active RecordのデータをChartkickにてグラフ表示。
 
-## 開発環境
+## 独自追加したファイル
+1. データ取得用バッチ: `/lib/script/remo_api.rb`
+2. バッチ定期実行スケジュール: `/config/schecule.rb` -> `wheneverize .`で追加
+3. グラフ表示用View: `/app/views/monitor/*`
+
+## 環境情報
 * OS: Mac OS Monterey (12.0.1)
-* Ruby: 3.0.2p107
+* Ruby: 3.0.2
 * Rails: 6.1.4.1
 * Yarn: 1.22.15
 * SQLite: 3.36.0
+* Whenever: v1.0.0
 * Chartkick: 4.1.0
-
-## 実行環境
-GitHubにアップして、Herokuにデプロイします。
+* Groupdate: 5.2.2
 
 ## 使い方
 1. このソースを`clone`する。
@@ -36,6 +40,27 @@ git clone https://github.com/jirtosterone/Benjamin.git
     "accept": "application/json"
   }
 }
+```
+
+3. `schedule.rb`の内容をcronに登録する。
+crontabへ展開する。
+```bash
+whenever --update-crontab
+```
+
+`crontab -l`を実行すると以下のような設定が追加されていることが確認できる。
+```
+0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/bash -l -c 'cd <railsアプリのディレクトリ> && bundle exec bin/rails runner -e production '\''lib/script/remo_api.rb'\'''
+```
+
+※crontabから削除するには以下を実行する。
+```bash
+whenever --clear-crontab
+```
+
+4. 実行する。
+```bash
+rails server
 ```
 
 ## 参考

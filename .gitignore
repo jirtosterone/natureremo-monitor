@@ -44,5 +44,5 @@ yarn-debug.log*
 # Ignore credentials
 /lib/script/remo.json
 
-# Ignore local files
+# Ignore local files & settings
 /**/.DS_Store
