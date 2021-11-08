@@ -46,3 +46,4 @@ yarn-debug.log*
 
 # Ignore local files & settings
 /**/.DS_Store
+/config/schedule.rb

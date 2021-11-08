@@ -1,18 +1,18 @@
-# Benjamin　(開発中)
+# Benjamin (プロトタイプ - 開発中)
 
 Nature Remoのデータを取得してグラフ表示するアプリです。  
 Ruby on Railsで開発しています。  
 我が家におわす観葉植物から名付けました。
 
 ## 概要
-1. `rails runner`でNature Remoから最新のデータを定期的に取得(5分おき等)。
+1. `rails runner`でNature Remoから最新のデータを定期的に取得。
 2. 取得したデータをActive Record (DB)に追加。
-3. Active RecordのデータをChartkickにてグラフ表示。
+3. Active RecordのデータをChartkickにてグラフ表示(1時間ごとの平均値)。
 
-## 独自追加したファイル
+## 主要なファイル
 1. データ取得用バッチ: `/lib/script/remo_api.rb`
-2. バッチ定期実行スケジュール: `/config/schecule.rb` -> `wheneverize .`で追加
-3. グラフ表示用View: `/app/views/monitor/*`
+2. グラフ表示用View: `/app/views/monitor/*`
+3. グラフ表示用Controller: `/app/controller/monitor_controller.rb`
 
 ## 環境情報
 * OS: Mac OS Monterey (12.0.1)
@@ -42,23 +42,44 @@ git clone https://github.com/jirtosterone/Benjamin.git
 }
 ```
 
-3. `schedule.rb`の内容をcronに登録する。
-crontabへ展開する。
+3. `schedule.rb`を作成する。
+```bash
+# schedule.rbのスケルトンを作成
+cd <railsアプリのディレクトリ>
+wheneverize .
+```
+
+`/config/schedule.rb`
+```ruby
+# 環境設定
+set :output, 'log/cron.log'
+set :environment, :development
+set :runner_command, 'rails runner'
+
+# 5分おきにデータを取得
+very 5.minute do
+  runner "lib/script/remo_api.rb"
+end
+```
+
+4. `schedule.rb`の内容をcronに登録する。
 ```bash
 whenever --update-crontab
 ```
 
-`crontab -l`を実行すると以下のような設定が追加されていることが確認できる。
-```
-0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/bash -l -c 'cd <railsアプリのディレクトリ> && bundle exec rails runner -e development '\''lib/script/remo_api.rb'\'' >> log/cron.log 2>&1
+```bash
+# cronの登録内容を確認
+crontab -l
+# 以下のような内容が登録されていればOK
+# 0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/bash -l -c 'cd <railsアプリのディレクトリ> && bundle exec rails runner -e development '\''lib/script/remo_api.rb'\'' >> log/cron.log 2>&1
 ```
 
-※crontabから削除するには以下を実行する。
 ```bash
+# cronの登録内容を削除
 whenever --clear-crontab
 ```
 
-4. 実行する。
+5. 実行する。
 ```bash
 rails server
 ```
