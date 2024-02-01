@@ -1,37 +1,42 @@
-# Benjamin (プロトタイプ - 開発中)
+# Nature Remo Monitor (プロトタイプ - 開発中)
 
-Nature Remoのデータを取得してグラフ表示するアプリです。  
-Ruby on Railsで開発しています。  
-我が家におわす観葉植物から名付けました。
+Nature Remo のデータを取得してグラフ表示するアプリです。  
+Ruby on Rails で開発しています。
 
 ## 概要
-1. `rails runner`でNature Remoから最新のデータを定期的に取得。
-2. 取得したデータをActive Record (DB)に追加。
-3. Active RecordのデータをChartkickにてグラフ表示(1時間ごとの平均値)。
+
+1. `rails runner`で Nature Remo から最新のデータを定期的に取得。
+2. 取得したデータを Active Record (DB)に追加。
+3. Active Record のデータを Chartkick にてグラフ表示(1 時間ごとの平均値)。
 
 ## 主要なファイル
+
 1. データ取得用バッチ: `/lib/script/remo_api.rb`
-2. グラフ表示用View: `/app/views/monitor/*`
-3. グラフ表示用Controller: `/app/controller/monitor_controller.rb`
+2. グラフ表示用 View: `/app/views/monitor/*`
+3. グラフ表示用 Controller: `/app/controller/monitor_controller.rb`
 
 ## 環境情報
-* OS: Mac OS Monterey (12.0.1)
-* Ruby: 3.0.2
-* Rails: 6.1.4.1
-* Yarn: 1.22.15
-* SQLite: 3.36.0
-* Whenever: v1.0.0
-* Chartkick: 4.1.0
-* Groupdate: 5.2.2
+
+- OS: Mac OS Monterey (12.0.1)
+- Ruby: 3.0.2
+- Rails: 6.1.4.1
+- Yarn: 1.22.15
+- SQLite: 3.36.0
+- Whenever: v1.0.0
+- Chartkick: 4.1.0
+- Groupdate: 5.2.2
 
 ## 使い方
+
 1. このソースを`clone`する。
+
 ```bash
 git clone https://github.com/jirtosterone/Benjamin.git
 ```
 
-2. Nature Remo Cloud APIを実行するためのCredentialファイルを用意する。  
-`/lib/script/remo.json`
+2. Nature Remo Cloud API を実行するための Credential ファイルを用意する。  
+   `/lib/script/remo.json`
+
 ```json
 {
   "remo": {
@@ -43,6 +48,7 @@ git clone https://github.com/jirtosterone/Benjamin.git
 ```
 
 3. `schedule.rb`を作成する。
+
 ```bash
 # schedule.rbのスケルトンを作成
 cd <railsアプリのディレクトリ>
@@ -50,6 +56,7 @@ wheneverize .
 ```
 
 `/config/schedule.rb`
+
 ```ruby
 # 環境設定
 set :output, 'log/cron.log'
@@ -62,7 +69,8 @@ very 5.minute do
 end
 ```
 
-4. `schedule.rb`の内容をcronに登録する。
+4. `schedule.rb`の内容を cron に登録する。
+
 ```bash
 whenever --update-crontab
 ```
@@ -80,9 +88,11 @@ whenever --clear-crontab
 ```
 
 5. 実行する。
+
 ```bash
 rails server
 ```
 
 ## 参考
+
 [Nature Remo Cloud API](https://developer.nature.global)
